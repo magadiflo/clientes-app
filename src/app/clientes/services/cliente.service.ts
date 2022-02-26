@@ -21,6 +21,10 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.urlEndPoint}/clientes`);
   }
 
+  getCliente(id: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.urlEndPoint}/clientes/${id}`);
+  }
+
   guardar(cliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(`${this.urlEndPoint}/clientes`, cliente, { headers: this.httpHeaders });
   }

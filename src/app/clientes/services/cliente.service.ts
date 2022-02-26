@@ -28,4 +28,8 @@ export class ClienteService {
   guardar(cliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(`${this.urlEndPoint}/clientes`, cliente, { headers: this.httpHeaders });
   }
+
+  update(cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.urlEndPoint}/clientes/${cliente.id}`, cliente, { headers: this.httpHeaders });
+  }
 }

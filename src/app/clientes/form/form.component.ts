@@ -5,7 +5,6 @@ import { Cliente } from '../interfaces/cliente.interface';
 import { ClienteService } from '../services/cliente.service';
 
 import Swal from "sweetalert2";
-import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -40,12 +39,15 @@ export class FormComponent implements OnInit {
   guardar(): void {
     this.clienteService.guardar(this.cliente)
       .subscribe(cliente => {
-        console.log('Cliente creado: ', cliente);
-        Swal.fire({
-          icon: 'success',
-          title: 'Registro exitoso',
-          text: `Cliente: ${cliente.nombre} ${cliente.apellido}`
-        });
+        Swal.fire({ icon: "success", title: "Registro exitoso", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
+        this.router.navigate(['/clientes']);
+      });
+  }
+
+  actualizar(): void {
+    this.clienteService.update(this.cliente)
+      .subscribe(cliente => {
+        Swal.fire({ icon: "success", title: "Actualización exitosa", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
         this.router.navigate(['/clientes']);
       });
   }

@@ -3,7 +3,7 @@
         {{ titulo }}
     </div>
     <div class="card-body">
-        <form (ngSubmit)="guardar()">
+        <form>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre">
@@ -16,7 +16,10 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email">
             </div>
-            <button type="submit" class="btn btn-primary">Crear</button>
+            <button type="submit" class="btn btn-primary" (click)="guardar()" *ngIf="!cliente.id; else btnActualizar">Crear</button>
+            <ng-template #btnActualizar>
+                <button type="submit" class="btn btn-warning" (click)="actualizar()">Actualizar</button>
+            </ng-template>            
         </form>
     </div>
 </div>

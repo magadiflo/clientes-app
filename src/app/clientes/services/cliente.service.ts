@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from "@angular/router";
 
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+
+import Swal from 'sweetalert2';
 
 import { Cliente } from '../interfaces/cliente.interface';
 import { environment } from 'src/environments/environment';
@@ -15,14 +18,23 @@ export class ClienteService {
   private urlEndPoint: string = environment.baseUrl;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router) { }
 
   getClientes(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${this.urlEndPoint}/clientes`);
   }
 
   getCliente(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.urlEndPoint}/clientes/${id}`);
+    return this.http.get<Cliente>(`${this.urlEndPoint}/clientes/${id}`)
+      .pipe(
+        catchError(e => {
+          this.router.navigate(['/clientes']);
+          Swal.fire('Error al editar', e.error.mensaje, 'error');
+          return throwError(() => e);
+        })
+      );
   }
 
   guardar(cliente: Cliente): Observable<Cliente> {

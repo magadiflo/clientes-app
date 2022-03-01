@@ -16,6 +16,7 @@ export class FormComponent implements OnInit {
 
   titulo: string = 'Nuevo cliente';
   cliente: Cliente = { nombre: '', apellido: '', email: '' };
+  private errores: string[] = []
 
   constructor(
     private clienteService: ClienteService,
@@ -38,17 +39,31 @@ export class FormComponent implements OnInit {
 
   guardar(): void {
     this.clienteService.guardar(this.cliente)
-      .subscribe(cliente => {
-        Swal.fire({ icon: "success", title: "Registro exitoso", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
-        this.router.navigate(['/clientes']);
+      .subscribe({
+        next: cliente => {
+          Swal.fire({ icon: "success", title: "Registro exitoso", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
+          this.router.navigate(['/clientes']);
+        },
+        error: err => {
+          this.errores = err.error.errors as string[];
+          console.log('Código del error desde el backend ' + err.status);  
+          console.log(this.errores);
+        }
       });
   }
 
   actualizar(): void {
     this.clienteService.update(this.cliente)
-      .subscribe(cliente => {
-        Swal.fire({ icon: "success", title: "Actualización exitosa", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
-        this.router.navigate(['/clientes']);
+      .subscribe({
+        next: cliente => {
+          Swal.fire({ icon: "success", title: "Actualización exitosa", text: `Cliente: ${cliente.nombre} ${cliente.apellido}` });
+          this.router.navigate(['/clientes']);
+        },
+        error: err => {
+          this.errores = err.error.errors as string[];
+          console.log('Código del error desde el backend ' + err.status);  
+          console.log(this.errores);
+        }
       });
   }
 

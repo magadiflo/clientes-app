@@ -16,7 +16,7 @@ export class FormComponent implements OnInit {
 
   titulo: string = 'Nuevo cliente';
   cliente: Cliente = { nombre: '', apellido: '', email: '' };
-  private errores: string[] = []
+  errores: string[] = []
 
   constructor(
     private clienteService: ClienteService,

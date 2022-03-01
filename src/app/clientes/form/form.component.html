@@ -1,3 +1,6 @@
+<ul *ngIf="errores.length > 0" class="alert alert-danger ">
+    <li *ngFor="let error of errores">{{ error }}</li>
+</ul>
 <div class="card">
     <div class="card-header">
         {{ titulo }}
@@ -6,7 +9,8 @@
         <form #miFormulario="ngForm">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre" required minlength="4" #nombre="ngModel">
+                <!-- <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre" required minlength="4" #nombre="ngModel"> -->
+                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre" #nombre="ngModel">
                 <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                     <div class="form-text text-danger" *ngIf="nombre.errors!['required']">El nombre es requerido</div>
                     <div class="form-text text-danger" *ngIf="nombre.errors!['minlength']">El nombre debe tener al menos 4 caracteres</div>
@@ -14,14 +18,16 @@
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="cliente.apellido" required #apellido="ngModel">
+                <!-- <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="cliente.apellido" required #apellido="ngModel"> -->
+                <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="cliente.apellido" #apellido="ngModel">
                 <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
                     <div class="form-text text-danger" *ngIf="apellido.errors!['required']">El apellido es requerido</div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" required email #email="ngModel">
+                <!-- <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" required email #email="ngModel"> -->
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" #email="ngModel">
                 <div *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div class="form-text text-danger" *ngIf="email.errors!['required']">El email es requerido</div>
                     <div class="form-text text-danger" *ngIf="email.errors!['email']">El email debe tener un formato válido</div>
